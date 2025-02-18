@@ -1,9 +1,11 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
-.header{
+
+.header {
     width: 100%;
     display: flex;
     background: #1A4D2E;
@@ -13,41 +15,42 @@
     align-items: center;
 }
 
-.header .logo{
+.header .logo {
     width: 100%;
     display: flex;
 }
 
-#udm-logo{
+#udm-logo {
     width: 40px;
     height: 40px;
 }
 
-.logout a i{
+.logout a i {
     font-size: 23px;
 }
 
-.navigation{
+.navigation {
     width: 250px;
     height: 100vh;
     background: #ffffca;
-    position: fixed; /* Keep sidebar fixed */
+    position: fixed;
+    /* Keep sidebar fixed */
     padding-top: 20px;
 
 }
 
-.user-icon img{
+.user-icon img {
     width: 50px;
     height: 50px;
 }
 
-.main-content{
+.main-content {
     margin-left: 20%;
     height: 100vh;
 }
 
 
-.search-bar #search{
+.search-bar #search {
     border-radius: 20px;
     border-right: 1px solid #5e5d5d;
     box-shadow: #bbbaba 3px 2px 1px;
@@ -57,85 +60,91 @@
     padding-left: 30px;
 }
 
-.search-bar i{
+.search-bar i {
     position: absolute;
 }
 
-.dropdown-center .btn{
+.dropdown-center .btn {
     width: 160px;
 }
 
-.banner{
+.banner {
     margin-left: 20%;
     height: 70px;
     width: 80%;
     padding: 10px;
-   
+
 }
 
-.employee-table .table{
+.employee-table .table {
     border-radius: 1px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.card-header{
+.card-header {
     margin-left: 18%;
 }
 
-.card-container{
+.card-container {
     margin-left: 19%;
 
 }
 
-.card-content{
+.card-content {
     width: 700px;
 }
 
-.card-body{
+.card-body {
     height: fit-content;
     background: #087a34;
     box-shadow: rgba(0, 0, 0, 0.3) 5px 5px 8px 0px;
- 
+
 }
 
-.card-body p{
+.card-body p {
     color: white;
     line-height: 1;
 }
 
-.chart{
+.chart {
     margin-left: 22%;
     width: 300px;
     height: 300px;
 }
 
-.dept-chart{
+.dept-chart {
     width: 720px;
     height: 320px;
 }
 
-.container-fluid{
-    background-image: url('../assets/image/UdmBackground.png'); /* Replace with your image path */
-    background-size: center;  /* Cover the entire page */
-    background-position: center;  /* Center the image */
-    background-repeat: no-repeat;  /* Prevent repeating */
+.container-fluid {
+    background-image: url('../assets/image/UdmBackground.png');
+    /* Replace with your image path */
+    background-size: cover;
+    /* Cover the entire page */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Prevent repeating */
     height: 100vh;
 }
 
-#username, #pass{
+#username,
+#pass {
     padding-left: 45px;
 }
 
-#username::placeholder, #pass::placeholder {
+#username::placeholder,
+#pass::placeholder {
     padding-left: 5px;
 }
 
-form{
+form {
     background: white;
     box-shadow: rgba(77, 76, 76, 0.35) 0px 5px 15px 8px;
 }
 
-.container-fluid form .btn{
+.container-fluid form .btn {
     background: #1A4D2E;
     color: white;
 }
@@ -145,4 +154,217 @@ footer {
     background-color: #1A4D2E;
     padding: 5px;
     text-align: center;
+}
+
+
+.cta-btn {
+    margin-left: 24%;
+    height: 55px;
+    margin-bottom: 3%;
+    background: none;
+}
+
+.upload-file .upload-form .file-label{
+    width: 230px;
+}
+
+
+
+
+/* UPLOADING AND PRINTING */
+
+
+/* DTR TABLE */
+
+.dtcontainer {
+    width: 60%;
+    margin: auto;
+    margin-top: 10px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    left: 100px;
+    bottom: 10px;
+}
+
+.sty {
+    color: #000000;
+}
+
+.employee-name {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.empname {
+    margin-top: -35px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.epame {
+    color: black;
+    margin-top: -10px;
+}
+
+.months {
+    text-align: left;
+    font-style: italic;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #000000;
+    margin-left: 170px;
+}
+
+.work {
+    margin-left: 170px;
+}
+
+.reg {
+    margin-left: 220px;
+}
+
+.sat {
+    margin-left: 70px;
+}
+
+.work1 {
+    margin-left: 170px;
+}
+
+
+
+.official {
+    margin-right: 50%;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.reg {
+    margin-top: -32px;
+    margin-right: 18px;
+    text-align: right;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.arrive {
+    margin-top: -13px;
+    margin-right: 50%;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.sat {
+    margin-top: -33px;
+    margin-right: 18px;
+    text-align: right;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.tbl {
+    margin-top: 10px;
+}
+
+.dtcontainer table {
+    width: 100%;
+    padding: 2px;
+    border-collapse: collapse;
+    background: #e4fc5e;
+    margin-top: 8px;
+    /* Reduced */
+    border: 2px solid black;
+}
+
+.dtcontainer th,
+.dtcontainer td {
+    border: 1px solid black;
+    padding: 6px;
+    /* Reduced from 8px */
+    text-align: center;
+    font-size: 13px;
+    /* Slightly smaller */
+}
+
+.dtcontainer th {
+    padding: 5px;
+    font-size: 10px;
+}
+
+.dtcontainer tbody td {
+    text-align: center;
+    padding: 5px;
+    /* Reduced */
+    font-size: 13px;
+    /* Slightly smaller */
+    border: 1px solid black;
+    height: 28px;
+    /* Reduced from 35px */
+}
+
+.dtcontainer tfoot .total-row td {
+    font-weight: bold;
+    background: #ddd;
+}
+
+.dtcontainer tfoot td {
+    text-align: right;
+    font-weight: bold;
+    padding: 6px;
+    /* Reduced */
+    border: 2px solid black;
+}
+
+.footer-text {
+    font-size: 15px;
+    /* Slightly smaller */
+    text-align: justify;
+    margin-top: 10px;
+    /* Reduced */
+    font-style: italic;
+    margin-top: 20px;
+    color: #000000;
+}
+
+.in-charge {
+    text-align: center;
+    margin-top: 15px;
+    /* Reduced */
+    font-weight: bold;
+    color: #000000;
+}
+
+.verified {
+    text-align: left;
+    margin-top: 15px;
+    /* Reduced */
+    font-weight: bold;
+    color: #000000;
+}
+
+.verified p {
+    font-weight: 100;
+    font-style: italic;
+    margin-left: 20px;
 }

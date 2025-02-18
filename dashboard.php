@@ -53,7 +53,7 @@ $name = isset($_GET['name']) ? trim($_GET['name']) : '';
     </header>
 
     <div class="navigation p-3 d-block">
-        <div class="user-icon d-flex justify-content-center border-bottom border-black">
+        <div class="user-icon d-flex justify-content-center border-bottom border-black pb-2">
             <img src="./assets/image/userImg.png" alt="User Icon" class="img-fluid">
             <div id="username" class="username mt-1 p-1 ">
                 <p class="lh-1 m-auto text-align-start">
@@ -65,7 +65,14 @@ $name = isset($_GET['name']) ? trim($_GET['name']) : '';
             </div>
         </div>
         <div class="nav-menu mt-3">
-            <div class="dashboard d-flex justify-content-center border-bottom border-black w-100 p-1">
+            <div class="dashboard d-flex justify-content-start w-100 mt-2 p-1">
+                <span>
+                    <p class="h6 fw-bold">
+                        MENU
+                    </p>
+                </span>
+            </div>
+            <div class="dashboard d-flex justify-content-center w-100 p-1">
                 <span>
                     <img
                         src="./assets/image/dashboardIcon.png"
@@ -81,14 +88,6 @@ $name = isset($_GET['name']) ? trim($_GET['name']) : '';
                 </span>
             </div>
 
-            <div class="dashboard d-flex justify-content-start w-100 mt-2 p-1">
-                <span>
-                    <p class="h6 fw-bold">
-                        MENU
-                    </p>
-                </span>
-            </div>
-
             <div class="employee d-flex justify-content-center w-100 p-1 ">
                 <span>
                     <img
@@ -100,21 +99,6 @@ $name = isset($_GET['name']) ? trim($_GET['name']) : '';
                     <a href="./employee.php" class="text-decoration-none">
                         <p class=" text-black me-2">
                             Employees
-                        </p>
-                    </a>
-                </span>
-            </div>
-            <div class="department d-flex justify-content-center w-100 p-1 ms-2">
-                <span>
-                    <img
-                        src="./assets/image/calendar.png"
-                        class="img-fluid "
-                        alt="Record icon" />
-                </span>
-                <span>
-                    <a href="./index.php" class="text-decoration-none">
-                        <p class=" text-black me-2 ms-2">
-                            Date Record
                         </p>
                     </a>
                 </span>

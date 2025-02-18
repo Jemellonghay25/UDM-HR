@@ -21,17 +21,6 @@ else
 </head>
 
 <body>
-    <header class="header p-2">
-        <div class="logo">
-            <span>
-                <img id="udm-logo"
-                    src="./assets/image/udm-logo-1.png"
-                    class="img-fluid ms-2"
-                    alt="UDM Logo" />
-            </span>
-        </div>
-    </header>
-
     <div class="container-fluid d-flex justify-content-center align-items-center">
         <form class="form w-25 p-3 rounded-3" action="./connection/log-in.php" method="POST">
             <h5 class="text-black text-center fw-bold m-3">

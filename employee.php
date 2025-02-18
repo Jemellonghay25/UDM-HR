@@ -24,6 +24,12 @@ $employeeResult = mysqli_query($db, "SELECT DISTINCT emp_id, name FROM temp_csv_
 $displayPages = 10;
 $startPage = max(1, min($page - floor($displayPages / 2), $totalPages - $displayPages + 1));
 $endPage = min($totalPages, $startPage + $displayPages - 1);
+
+$attendance = isset($_SESSION['attendance']) ? $_SESSION['attendance'] : [];
+$searched_name = isset($_SESSION['searched_name']) ? $_SESSION['searched_name'] : '';
+
+unset($_SESSION['attendance'], $_SESSION['searched_name']); // Clear session after use
+
 ?>
 
 <!DOCTYPE html>
@@ -35,9 +41,14 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
     <title>Employee Details</title>
     <link rel="stylesheet" href="./styling/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/search.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/1b039bb504.js" crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
@@ -65,7 +76,7 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
     </header>
 
     <div class="navigation p-3 d-block">
-        <div class="user-icon d-flex justify-content-center border-bottom border-black">
+        <div class="user-icon d-flex justify-content-center border-bottom border-black pb-2">
             <img src="./assets/image/userImg.png" alt="User Icon" class="img-fluid">
             <div id="username" class="username mt-1 p-1 ">
                 <p class="lh-1 m-auto text-align-start">
@@ -78,7 +89,15 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
 
         </div>
         <div class="nav-menu mt-3">
-            <div class="dashboard d-flex justify-content-center border-bottom border-black w-100 p-1">
+            <div class="dashboard d-flex justify-content-start w-100 mt-2 p-1">
+                <span>
+                    <p class="h6 fw-bold">
+                        MENU
+                    </p>
+                </span>
+            </div>
+
+            <div class="dashboard d-flex justify-content-center w-100 p-1">
                 <span>
                     <img
                         src="./assets/image/dashboardIcon.png"
@@ -94,14 +113,6 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
                 </span>
             </div>
 
-            <div class="dashboard d-flex justify-content-start w-100 mt-2 p-1">
-                <span>
-                    <p class="h6 fw-bold">
-                        MENU
-                    </p>
-                </span>
-            </div>
-
             <div class="employee d-flex justify-content-center w-100 p-1 ">
                 <span>
                     <img
@@ -113,21 +124,6 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
                     <a href="./employee.php" class="text-decoration-none">
                         <p class=" text-black me-2">
                             Employees
-                        </p>
-                    </a>
-                </span>
-            </div>
-            <div class="department d-flex justify-content-center w-100 p-1 ms-2">
-                <span>
-                    <img
-                        src="./assets/image/calendar.png"
-                        class="img-fluid "
-                        alt="Record icon" />
-                </span>
-                <span>
-                    <a href="./index.php" class="text-decoration-none">
-                        <p class=" text-black me-2 ms-2">
-                            Date Record
                         </p>
                     </a>
                 </span>
@@ -147,23 +143,27 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
                     <span class="icon is-small is-left">
                         <i id="glass" class="fas fa-magnifying-glass mt-2 ms-1 p-1 "></i>
                     </span>
-                    <input id="search" class="input" type="email" placeholder="Search Faculty" />
+                    <input type="text" id="search" class="input" placeholder="Search Faculty" />
                 </p>
             </div>
             <div class="dropdown-center ml-1 p-2">
-                <button class="btn border border-black rounded-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button id="deptDropdown" class="btn border border-black rounded-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Department
                 </button>
                 <ul class="dropdown-menu ">
-                    <li><a class="dropdown-item" href="#">Department 1</a></li>
-                    <li><a class="dropdown-item" href="#">Department 1</a></li>
-                    <li><a class="dropdown-item" href="#">Department 1</a></li>
+                     <li><a class="dropdown-item" href="#" data-dept="all">All Departments</a></li>
+                    <li><a class="dropdown-item" href="#" data-dept="cet">CET</a></li>
+                    <li><a class="dropdown-item" href="#" data-dept="ccj">CCJ</a></li>
+                    <li><a class="dropdown-item" href="#" data-dept="chs">CHS</a></li>
+                    <li><a class="dropdown-item" href="#" data-dept="cba">CBA</a></li>
+                    <li><a class="dropdown-item" href="#" data-dept="ced">CED</a></li>
+                    <li><a class="dropdown-item" href="#" data-dept="cas">CAS</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="employee-table p-2">
-            <table class="table">
+            <table id="empTable" class="table">
                 <thead>
                     <tr>
                         <th>USERID</th>
@@ -173,14 +173,17 @@ $endPage = min($totalPages, $startPage + $displayPages - 1);
                         <th>VIEW</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="empTableBody">
                     <?php while ($row = mysqli_fetch_assoc($employeeResult)) : ?>
                         <tr>
                             <td><?php echo $row['emp_id']; ?></td>
-                            <td><?php echo $row['name']; ?></td>
+                            <td><?php echo htmlspecialchars($row['name']); ?></td>
                             <td>Permanent</td>
-                            <td>Quad</td>
-                            <td><a href="#"><img src="./assets/image/preview.png" alt="preview"></a></td>
+                            <td>QUAD</td>
+                            <td> <a href="./connection/preview.php?name=<?php echo urlencode($row['name']); ?>">
+                                    <img src="./assets/image/preview.png" alt="preview">
+                                </a>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
