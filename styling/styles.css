@@ -27,7 +27,6 @@
     font-size: 23px;
 }
 
-
 .navigation{
     width: 250px;
     height: 100vh;
@@ -37,29 +36,14 @@
 
 }
 
-.user-icon{
-    text-align: center;
-    height: fit-content;
-}
-
-#icon{
-    height: fit-content;
-}
-
-#username{
-    height: fit-content;
-    padding: 0;
-    margin: 0;
-}
-
 .user-icon img{
     width: 50px;
     height: 50px;
 }
 
 .main-content{
-
     margin-left: 20%;
+    height: 100vh;
 }
 
 
@@ -94,37 +78,71 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.card-header{
+    margin-left: 18%;
+}
+
 .card-container{
-    margin-left: 22%;
+    margin-left: 19%;
+
 }
 
-.card-container .card{
-    width: 230px;
-    height: 180px;
-    border: none;
-}
-
-.card-container .card a{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background: #6E8E59;
+.card-content{
+    width: 700px;
 }
 
 .card-body{
-    width: 240px;
-    background: #163020;
+    height: fit-content;
+    background: #087a34;
     box-shadow: rgba(0, 0, 0, 0.3) 5px 5px 8px 0px;
+ 
 }
 
 .card-body p{
     color: white;
+    line-height: 1;
 }
 
-#chart{
+.chart{
     margin-left: 22%;
     width: 300px;
     height: 300px;
-    border: 1px solid black;
+}
+
+.dept-chart{
+    width: 720px;
+    height: 320px;
+}
+
+.container-fluid{
+    background-image: url('../assets/image/UdmBackground.png'); /* Replace with your image path */
+    background-size: center;  /* Cover the entire page */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat;  /* Prevent repeating */
+    height: 100vh;
+}
+
+#username, #pass{
+    padding-left: 45px;
+}
+
+#username::placeholder, #pass::placeholder {
+    padding-left: 5px;
+}
+
+form{
+    background: white;
+    box-shadow: rgba(77, 76, 76, 0.35) 0px 5px 15px 8px;
+}
+
+.container-fluid form .btn{
+    background: #1A4D2E;
+    color: white;
+}
+
+footer {
+    height: fit-content;
+    background-color: #1A4D2E;
+    padding: 5px;
+    text-align: center;
 }

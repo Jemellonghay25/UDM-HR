@@ -1,3 +1,31 @@
+<?php
+session_start();
+include('./connection/server.php');
+
+// Fetch user details
+$query = "SELECT * FROM user WHERE user_id = '" . $_SESSION["user"] . "'";
+$result = mysqli_query($db, $query);
+$row = mysqli_fetch_assoc($result);
+
+// Pagination settings
+$limit = 10;
+$page = max(1, (int) ($_GET['page'] ?? 1));
+$offset = ($page - 1) * $limit;
+
+// Get total records
+$totalResult = mysqli_query($db, "SELECT COUNT(DISTINCT emp_id) AS total FROM temp_csv_data");
+$totalRecords = mysqli_fetch_assoc($totalResult)['total'];
+$totalPages = ceil($totalRecords / $limit);
+
+// Fetch paginated employee data
+$employeeResult = mysqli_query($db, "SELECT DISTINCT emp_id, name FROM temp_csv_data LIMIT $limit OFFSET $offset");
+
+// Pagination range
+$displayPages = 10;
+$startPage = max(1, min($page - floor($displayPages / 2), $totalPages - $displayPages + 1));
+$endPage = min($totalPages, $startPage + $displayPages - 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +41,7 @@
 </head>
 
 <body>
-    <header class="header p-1">
+    <header class="header p-2">
         <div class="logo">
             <span>
                 <img id="udm-logo"
@@ -29,26 +57,25 @@
             </span>
         </div>
 
-        <div class="logout m-2 me-4">
-            <a href="#">
+        <div class="logout me-4">
+            <a href="./connection/logout.php">
                 <i class="bi bi-box-arrow-right text-white"></i>
             </a>
         </div>
     </header>
 
-    <div class="navigation p-3">
+    <div class="navigation p-3 d-block">
         <div class="user-icon d-flex justify-content-center border-bottom border-black">
-            <div id="icon" class="mt-2">
-                <img src="./assets/image/userImg.png" alt="User Icon" class="img-fluid">
-            </div>
-            <div id="username" class="username mt-2 ms-2 p-1">
-                <p class="lh-1 me-5">
-                    jelo Flores
+            <img src="./assets/image/userImg.png" alt="User Icon" class="img-fluid">
+            <div id="username" class="username mt-1 p-1 ">
+                <p class="lh-1 m-auto text-align-start">
+                    <?php echo $row['first_name'] . ""; ?>
                 </p>
-                <p class="lh-1">
-                    <strong>Human Resource</strong>
+                <p class="lh-1 m-auto text-align-start">
+                    <strong><?php echo $row['title']; ?></strong>
                 </p>
             </div>
+
         </div>
         <div class="nav-menu mt-3">
             <div class="dashboard d-flex justify-content-center border-bottom border-black w-100 p-1">
@@ -90,21 +117,6 @@
                     </a>
                 </span>
             </div>
-            <div class="department d-flex justify-content-center w-100 p-1 ">
-                <span>
-                    <img
-                        src="./assets/image/departmentIcon.png"
-                        class="img-fluid"
-                        alt="employee icon" />
-                </span>
-                <span>
-                    <a href="#" class="text-decoration-none">
-                        <p class=" text-black ">
-                            Department
-                        </p>
-                    </a>
-                </span>
-            </div>
             <div class="department d-flex justify-content-center w-100 p-1 ms-2">
                 <span>
                     <img
@@ -124,8 +136,8 @@
     </div>
 
     <div class="banner">
-            <p class="mt-1 h1 fs-3">Permanent Employee</p>
-        </div>
+        <p class="mt-1 h1 fs-3">Permanent Employee</p>
+    </div>
 
     <div class="main-content w-75 p-1">
         <div class="field d-flex d-flex justify-content-between p-1">
@@ -154,51 +166,50 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="has-text-black">USERID</th>
-                        <th class="has-text-black">NAME</th>
-                        <th class="has-text-black">STATUS</th>
-                        <th class="has-text-black">DEPARTMENT</th>
-                        <th class="has-text-black">ACTIONS</th>
+                        <th>USERID</th>
+                        <th>NAME</th>
+                        <th>STATUS</th>
+                        <th>DEPARTMENT</th>
+                        <th>VIEW</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="has-text-black">1</td>
-                        <td class="has-text-black">John Doe</td>
-                        <td class="has-text-black">Permanent</td>
-                        <td class="has-text-black">Quad</td>
-                        <td class="has-text-black">
-                            <span><a href="#"><img src="./assets/image/preview.png" alt="preview"></a></span>
-                            <span><a href="#"><img src="./assets/image/Edit.png" alt="edit"></a></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="has-text-black">2</td>
-                        <td class="has-text-black">Jane Smith</td>
-                        <td class="has-text-black">Permanent</td>
-                        <td class="has-text-black">Quad</td>
-                        <td class="has-text-black">
-                            <span><a href="#"><img src="./assets/image/preview.png" alt="preview"></a></span>
-                            <span><a href="#"><img src="./assets/image/Edit.png" alt="edit"></a></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="has-text-black">3</td>
-                        <td class="has-text-black">Michael Johnson</td>
-                        <td class="has-text-black">Permanent</td>
-                        <td class="has-text-black">Quad</td>
-                        <td class="has-text-black">
-                            <span><a href="#"><img src="./assets/image/preview.png" alt="preview"></a></span>
-                            <span><a href="#"><img src="./assets/image/Edit.png" alt="edit"></a></span>
-                        </td>
-                    </tr>
+                    <?php while ($row = mysqli_fetch_assoc($employeeResult)) : ?>
+                        <tr>
+                            <td><?php echo $row['emp_id']; ?></td>
+                            <td><?php echo $row['name']; ?></td>
+                            <td>Permanent</td>
+                            <td>Quad</td>
+                            <td><a href="#"><img src="./assets/image/preview.png" alt="preview"></a></td>
+                        </tr>
+                    <?php endwhile; ?>
                 </tbody>
-
             </table>
+
+            <!-- Pagination Controls -->
+            <nav class="d-flex justify-content-end">
+                <ul class="pagination">
+                    <?php if ($page > 1) : ?>
+                        <li class="page-item"><a class="page-link text-black" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
+                    <?php endif; ?>
+
+                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                            <a class="page-link text-black" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <?php if ($page < $totalPages) : ?>
+                        <li class="page-item"><a class="page-link text-black" href="?page=<?php echo $page + 1; ?>">Next</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
         </div>
     </div>
 
-
+    <footer class="p-1 position-absolute w-100">
+        <p class="fs-6 text-center text-white">Universidad De Manila || "Uplifting lives through quality education."</p>
+    </footer>
 </body>
 
 </html>
