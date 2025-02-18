@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -58,7 +59,7 @@
                         alt="dashboard icon" />
                 </span>
                 <span>
-                    <a href="./dashboard.php" class="text-decoration-none">
+                    <a href="#" class="text-decoration-none">
                         <p class="text-black">
                             Dashboard
                         </p>
@@ -122,56 +123,24 @@
         </div>
     </div>
 
-    <div class="container w-50 mt-2">
-        <h4 class="text-center">DAILY TIME RECORD</h1>
-        <!-- Search Form -->
-        <!-- <form method="GET" action="">
-                <input id="input" name="name" class="input is-centered block has-background-light has-text-dark custom-placeholder" type="text" placeholder="Search by Name" />
-                <button type="submit" class="button is-primary mt-2">Search</button>
-            </form> -->
-
-        <p class="month ms-5">For the month of __________________________</p>
-
-        <table id="dtrTable" class="table table-bordered border-black w-75 text-center m-auto">
-            <thead>
-                <tr>
-                    <th rowspan="2" class="has-text-centered has-text-dark">Day</th>
-                    <th colspan="2" class="has-text-centered has-text-dark">A.M.</th>
-                    <th colspan="2" class="has-text-centered has-text-dark">P.M.</th>
-                    <th colspan="2" class="has-text-centered has-text-dark">Undertime</th>
-                </tr>
-                <tr>
-                    <th class="has-text-centered has-text-dark">Arrival</th>
-                    <th class="has-text-centered has-text-dark">Departure</th>
-                    <th class="has-text-centered has-text-dark">Arrival</th>
-                    <th class="has-text-centered has-text-dark">Departure</th>
-                    <th class="has-text-centered has-text-dark">Hours</th>
-                    <th class="has-text-centered has-text-dark">Minutes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php for ($day = 1; $day <= 31; $day++): ?>
-                    <tr>
-                        <td class='has-text-centered has-text-dark'><?= $day; ?></td>
-                        <td class='has-text-centered has-text-dark'></td>
-                        <td class='has-text-centered has-text-dark'></td>
-                        <td class='has-text-centered has-text-dark'></td>
-                        <td class='has-text-centered has-text-dark'></td>
-                        <td class='has-text-centered has-text-dark'></td>
-                        <td class='has-text-centered has-text-dark'></td>
-                    </tr>
-                <?php endfor; ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5" class="text-end">Total</td>
-                    <td class="has-text-centered has-text-dark"></td>
-                    <td class="has-text-centered has-text-dark"></td>
-                </tr>
-            </tfoot>
-        </table>
+    <div class="card-container mt-3 p-3">
+        <div class="card-header">
+            <h3 class="text-start">Dashboard</h3>
+        </div>
+        <div class="card-body 5 mt-5 p-2 rounded-3">
+            <p class="fs-4 fw-bold text-center">
+                Employee
+            </p>
+            <p class="fs-4 fw-bold text-center ms-5">
+                3,000
+            </p>
+        </div>
     </div>
 
+    <canvas id="chart"></canvas>
+
+
+<script src="./js/charts.js"></script>
 
 </body>
 
