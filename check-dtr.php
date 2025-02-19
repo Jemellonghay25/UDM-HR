@@ -18,7 +18,7 @@ $totalRecords = mysqli_fetch_assoc($totalResult)['total'];
 $totalPages = ceil($totalRecords / $limit);
 
 // Fetch paginated employee data
-$employeeResult = mysqli_query($db, "SELECT DISTINCT emp_id, name, status, time_in, time_out, department FROM masterlist LIMIT $limit OFFSET $offset");
+$employeeResult = mysqli_query($db, "SELECT DISTINCT emp_id, name, status, department FROM masterlist LIMIT $limit OFFSET $offset");
 
 // Pagination range
 $displayPages = 10;
@@ -153,13 +153,7 @@ unset($_SESSION['attendance'], $_SESSION['searched_name']); // Clear session aft
     </div>
 
     <div class="banner d-flex justify-content-between">
-        <p class="mt-1 h1 fs-3">Set Time-in and Time-Out</p>
-        <form action="./connection/set-schedule.php" method="post" class="time shadow-none d-flex justify-content-end p-1">
-            <input type="time" name="time_in" id="time_in" class="form-control w-50 border border-black m-auto">
-            <input type="time" name="time_out" id="time_out" class="form-control w-50 border border-black m-auto">
-            <button type="submit" class="btn-submit btn btn-dark text-white fw-bold">
-                Set Time
-            </button>
+        <p class="mt-1 h1 fs-3">Employees</p>
     </div>
 
     <div class="main-content w-75 p-1">
@@ -196,35 +190,23 @@ unset($_SESSION['attendance'], $_SESSION['searched_name']); // Clear session aft
                         <th>NAME</th>
                         <th>STATUS</th>
                         <th>DEPARTMENT</th>
-                        <th>TIME-IN</th>
-                        <th>TIME-OUT</th>
+                        <th>VIEW</th>
                     </tr>
                 </thead>
                 <tbody id="empTableBody">
                     <?php while ($row = mysqli_fetch_assoc($employeeResult)) : ?>
                         <tr>
-                            <td>
-                                <input type="checkbox" name="selectedEmployees[]" value="<?php echo htmlspecialchars($row['name']); ?>">
-                                <?php echo htmlspecialchars($row['name']); ?>
-                            </td>
+                            <td><?php echo htmlspecialchars($row['name']); ?></td>
                             <td><?php echo $row['status']; ?></td>
                             <td><?php echo $row['department']; ?></td>
-                            <td>
-                                <?php
-                                echo ($row['time_in'] !== '00:00:00') ? $row['time_in'] : '';
-                                ?>
+                            <td> <a href="./connection/preview.php?name=<?php echo urlencode($row['name']); ?>">
+                                    <img src="./assets/image/preview.png" alt="preview">
+                                </a>
                             </td>
-                            <td>
-                                <?php
-                                echo ($row['time_out'] !== '00:00:00') ? $row['time_out'] : '';
-                                ?>
-                            </td>
-
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>
-            </form>
 
             <!-- Pagination Controls -->
             <nav class="d-flex justify-content-end">

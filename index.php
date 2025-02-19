@@ -83,6 +83,7 @@ if (!empty($name)) {
             </div>
 
         </div>
+        <!-- SIDE NAVIGATION DASHBOARD, CHECK-DTR, VIEW EMPLOYEES, UPLOAD -->
         <div class="nav-menu mt-3">
             <div class="dashboard d-flex justify-content-start w-100 mt-2 p-1">
                 <span>
@@ -94,31 +95,51 @@ if (!empty($name)) {
 
             <div class="dashboard d-flex justify-content-center w-100 p-1">
                 <span>
-                    <img
-                        src="./assets/image/dashboardIcon.png"
-                        class="img-fluid"
-                        alt="dashboard icon" />
+                    <i class="bi bi-bar-chart-fill text-black"></i>
                 </span>
                 <span>
                     <a href="./dashboard.php" class="text-decoration-none">
-                        <p class="text-black">
+                        <p class="text-black ms-1">
                             Dashboard
                         </p>
                     </a>
                 </span>
             </div>
 
-            <div class="employee d-flex justify-content-center w-100 p-1 ">
+            <div class="check-dtr d-flex justify-content-center w-100 p-1 ms-1">
                 <span>
-                    <img
-                        src="./assets/image/employeesIcon.png"
-                        class="img-fluid"
-                        alt="Employee icon" />
+                    <i class="bi bi-calendar-check-fill text-black"></i>
                 </span>
                 <span>
                     <a href="./employee.php" class="text-decoration-none">
-                        <p class=" text-black me-2">
-                            Employees
+                        <p class=" text-black ms-1">
+                            Check DTR
+                        </p>
+                    </a>
+                </span>
+            </div>
+
+            <div class="view-employee d-flex justify-content-center w-100 p-1 ms-3">
+                <span>
+                    <i class="bi bi-people-fill text-black"></i>
+                </span>
+                <span>
+                    <a href="./check-dtr.php" class="text-decoration-none">
+                        <p class=" text-black ms-1">
+                            View Employee
+                        </p>
+                    </a>
+                </span>
+            </div>
+
+            <div class="upload d-flex justify-content-center w-100 ms-2 p-1">
+                <span>
+                    <i class="bi bi-file-earmark-arrow-up-fill text-black"></i>
+                </span>
+                <span>
+                    <a href="./upload-window.php" class="text-decoration-none ">
+                        <p class="text-black ms-1">
+                            Upload Files
                         </p>
                     </a>
                 </span>
@@ -127,17 +148,6 @@ if (!empty($name)) {
     </div>
 
     <div class="cta-btn d-flex justify-content-end w-75 p-2">
-        <div class="upload-file">
-            <form action="./connection/upload.php" method="post" enctype="multipart/form-data" class="upload-form shadow-none">
-                <label class="file-label">
-                    <input class="file-input" type="file" name="csv_file" id="csvFileInput" />
-                </label>
-                <button type="submit" class="upload-btn btn btn-dark me-1">
-                <i class="bi bi-upload"></i>
-                    Upload
-                </button>
-            </form>
-        </div>
         <div class="print-btn">
             <button class="btn btn-primary">
                 <span>
@@ -194,52 +204,59 @@ if (!empty($name)) {
                 <?php
                 for ($day = 1; $day <= 31; $day++) {
                     echo "<tr>
-                        <td class='has-text-centered has-text-dark'>$day</td>";
+            <td class='has-text-centered has-text-dark'>$day</td>";
 
                     if (isset($attendance[$day])) {
                         $record = $attendance[$day][0];
-                        $time_in = date("H:i", strtotime($record['time_in']));
-                        $time_out = date("H:i", strtotime($record['time_out']));
 
-                        // AM & PM Splitting
-                        $am_arrival = (strtotime($time_in) < strtotime("12:00")) ? $time_in : "";
-                        $am_departure = (strtotime($time_out) < strtotime("12:00")) ? $time_out : "";
-                        $pm_arrival = (!$am_arrival) ? $time_in : "";
-                        $pm_departure = (!$am_departure) ? $time_out : "";
+                        // Get raw values from the database
+                        $time_in_db  = $record['time_in'];
+                        $time_out_db = $record['time_out'];
 
-                        // Calculate undertime if shift is less than 8 hours
-                        $undertime_hours = "";
+                        // Only format if the value is not "00:00:00"
+                        $time_in  = ($time_in_db !== "00:00:00")  ? date("H:i", strtotime($time_in_db))  : "";
+                        $time_out = ($time_out_db !== "00:00:00") ? date("H:i", strtotime($time_out_db)) : "";
+
+                        // AM & PM Splitting (only if a time is provided)
+                        $am_arrival    = ($time_in !== "" && strtotime($time_in) < strtotime("12:00")) ? $time_in : "";
+                        $am_departure  = ($time_out !== "" && strtotime($time_out) < strtotime("12:00")) ? $time_out : "";
+                        $pm_arrival    = ($time_in !== "" && strtotime($time_in) >= strtotime("12:00")) ? $time_in : "";
+                        $pm_departure  = ($time_out !== "" && strtotime($time_out) >= strtotime("12:00")) ? $time_out : "";
+
+                        // Calculate undertime if both times are set
+                        $undertime_hours   = "";
                         $undertime_minutes = "";
-                        if ($time_in && $time_out) {
-                            $shift_hours = 8;
-                            $worked_hours = (strtotime($time_out) - strtotime($time_in)) / 3600;
+                        if ($time_in !== "" && $time_out !== "") {
+                            $shift_hours   = 8;
+                            $worked_hours  = (strtotime($time_out) - strtotime($time_in)) / 3600;
                             if ($worked_hours < $shift_hours) {
-                                $undertime = $shift_hours - $worked_hours;
-                                $undertime_hours = floor($undertime);
+                                $undertime         = $shift_hours - $worked_hours;
+                                $undertime_hours   = floor($undertime);
                                 $undertime_minutes = ($undertime - $undertime_hours) * 60;
                             }
                         }
 
                         echo "
-                            <td class='has-text-centered has-text-dark'>$am_arrival</td>
-                            <td class='has-text-centered has-text-dark'>$am_departure</td>
-                            <td class='has-text-centered has-text-dark'>$pm_arrival</td>
-                            <td class='has-text-centered has-text-dark'>$pm_departure</td>
-                            <td class='has-text-centered has-text-dark'>$undertime_hours</td>
-                            <td class='has-text-centered has-text-dark'>$undertime_minutes</td>";
+                <td class='has-text-centered has-text-dark'>$am_arrival</td>
+                <td class='has-text-centered has-text-dark'>$am_departure</td>
+                <td class='has-text-centered has-text-dark'>$pm_arrival</td>
+                <td class='has-text-centered has-text-dark'>$pm_departure</td>
+                <td class='has-text-centered has-text-dark'>$undertime_hours</td>
+                <td class='has-text-centered has-text-dark'>$undertime_minutes</td>";
                     } else {
                         echo "<td class='has-text-centered has-text-dark'></td>
-                              <td class='has-text-centered has-text-dark'></td>
-                              <td class='has-text-centered has-text-dark'></td>
-                              <td class='has-text-centered has-text-dark'></td>
-                              <td class='has-text-centered has-text-dark'></td>
-                              <td class='has-text-centered has-text-dark'></td>";
+                  <td class='has-text-centered has-text-dark'></td>
+                  <td class='has-text-centered has-text-dark'></td>
+                  <td class='has-text-centered has-text-dark'></td>
+                  <td class='has-text-centered has-text-dark'></td>
+                  <td class='has-text-centered has-text-dark'></td>";
                     }
 
                     echo "</tr>";
                 }
                 ?>
             </tbody>
+
             <tfoot>
                 <tr>
                     <td colspan="5" class="text-end">Total</td>

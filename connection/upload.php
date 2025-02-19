@@ -71,7 +71,7 @@ if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $csvFile)) {
     }
 
     // Insert Data into the Database
-    $stmt = $conn->prepare("INSERT INTO temp_csv_data (emp_id, name, date, time_in, time_out) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO csv_bio (emp_id, name, date, time_in, time_out) VALUES (?, ?, ?, ?, ?)");
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
     }
