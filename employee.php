@@ -39,12 +39,11 @@ unset($_SESSION['attendance'], $_SESSION['searched_name']); // Clear session aft
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Record</title>
+    <link rel="shortcut icon" href="./assets/image/udm-logo-1.png" />
     <link rel="stylesheet" href="./styling/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./js/search.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/1b039bb504.js" crossorigin="anonymous"></script>
 
@@ -172,20 +171,6 @@ unset($_SESSION['attendance'], $_SESSION['searched_name']); // Clear session aft
                     </span>
                     <input type="text" id="search" class="input" placeholder="Search Faculty" />
                 </p>
-            </div>
-            <div class="dropdown-center ml-1 p-2">
-                <button id="deptDropdown" class="btn border border-black rounded-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Department
-                </button>
-                <ul class="dropdown-menu ">
-                    <li><a class="dropdown-item" href="#" data-dept="all">All Departments</a></li>
-                    <li><a class="dropdown-item" href="#" data-dept="cet">CET</a></li>
-                    <li><a class="dropdown-item" href="#" data-dept="ccj">CCJ</a></li>
-                    <li><a class="dropdown-item" href="#" data-dept="chs">CHS</a></li>
-                    <li><a class="dropdown-item" href="#" data-dept="cba">CBA</a></li>
-                    <li><a class="dropdown-item" href="#" data-dept="ced">CED</a></li>
-                    <li><a class="dropdown-item" href="#" data-dept="cas">CAS</a></li>
-                </ul>
             </div>
         </div>
 

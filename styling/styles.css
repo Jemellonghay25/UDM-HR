@@ -31,7 +31,7 @@
 
 .navigation {
     width: 250px;
-    height: 100vh;
+    height: 100lvh;
     background: #ffffca;
     position: fixed;
     /* Keep sidebar fixed */
@@ -118,15 +118,13 @@
 }
 
 .container-fluid {
-    background-image: url('../assets/image/UdmBackground.png');
-    /* Replace with your image path */
-    background-size: cover;
-    /* Cover the entire page */
-    background-position: center;
-    /* Center the image */
+    background-image: url(../assets/image/UdmBackground.png);
+    background-position: right bottom;
     background-repeat: no-repeat;
-    /* Prevent repeating */
+    background-size: cover;
+    background-color: #292A2D;
     height: 100vh;
+    height: 100dvh;
 }
 
 #username,
@@ -150,7 +148,7 @@ form {
 }
 
 footer {
-    height: fit-content;
+    height: 30px;
     background-color: #1A4D2E;
     padding: 5px;
     text-align: center;
@@ -337,10 +335,8 @@ footer {
 
 .footer-text {
     font-size: 15px;
-    /* Slightly smaller */
     text-align: justify;
     margin-top: 10px;
-    /* Reduced */
     font-style: italic;
     margin-top: 20px;
     color: #000000;
@@ -349,7 +345,6 @@ footer {
 .in-charge {
     text-align: center;
     margin-top: 15px;
-    /* Reduced */
     font-weight: bold;
     color: #000000;
 }
@@ -357,7 +352,6 @@ footer {
 .verified {
     text-align: left;
     margin-top: 15px;
-    /* Reduced */
     font-weight: bold;
     color: #000000;
 }
@@ -376,4 +370,14 @@ footer {
 .time .btn-submit{
     width: 100px;
     font-size: 13px;
+}
+
+/* LOGIN FOOTER */
+.footerText {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    margin-bottom: 20px;
+    color: #676560;
+    overflow: hidden;
 }

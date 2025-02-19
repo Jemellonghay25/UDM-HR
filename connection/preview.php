@@ -26,7 +26,7 @@ if (isset($_GET['name']) && !empty($_GET['name'])) {
     $_SESSION['attendance'] = $attendance;
     $_SESSION['searched_name'] = $name;
     
-    header("Location: ../index.php?name=" . urlencode($name));
+    header("Location: ../dtr.php?name=" . urlencode($name));
     exit();
     
 }
